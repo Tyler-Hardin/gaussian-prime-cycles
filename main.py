@@ -30,8 +30,9 @@ def grid(l, d, rot):
   
 d = [1, 0]
 rot = [[0,-1],[1,0]]
+l = 100
 
-Ps, X, Y = grid(20, d, rot)
+Ps, X, Y = grid(l, d, rot)
 
 cls = classes(Ps, X, Y)
 cls = sorted(cls, key=lambda c : len(c[0]))
@@ -53,5 +54,7 @@ for c in cls:
   plt.scatter(X, Y, c=str(float(i) / len(cls)), s=50)
   
   i += 1
+plt.xlim(-1, l)
+plt.ylim(-1, l)
 plt.show()
 #check_equal()
