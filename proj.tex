@@ -1,0 +1,29 @@
+\documentclass[12pt]{article}
+
+\author{Karen Dana \and Tyler Hardin}
+\title{Project Proposal: Gaussian Prime Cycles}
+\begin{document}
+\maketitle
+
+Firstly, we need to define that Gaussian integers are complex numbers of the
+form $a+bi$, where $a$ and $b$ are integers. Some Gaussian integers have no
+nontrivial factorization. These can be considered similar to the primes of the
+natural numbers and are called “Gaussian primes.” Since we are considering
+complex integers, we will be operating within the framework of the 2D plane
+restricted to integers, so when we say “step right” that could be thought to
+mean to move from the point $(x,y)$ to $(x+1,y)$ or $a+bi$ to $a+1+bi$.
+
+\bigskip
+We will investigate Gaussian prime cycles. The cycles are formed by starting
+at a given point and stepping right until a Gaussian prime is found, at which
+point the direction becomes down. The process of stepping in the same
+direction until a Gaussian prime is found, then rotating the direction 90
+degrees is repeated until we return to the initial point and initial
+direction. For the project, we will plot the cycle length as a function of
+the initial point and the discrete derivative/finite difference of the
+function. The question we hope to answer is whether there is a discernable
+pattern to the aforementioned plots. The project will approach the problem
+using two implementations: numeric, using standard Python, and symbolic, using
+the Python library sympy.
+
+\end{document}
