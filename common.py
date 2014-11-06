@@ -158,14 +158,12 @@ def classes(Ps, X, Y):
         
         # If equal, append (x,y) to classes init point list.
         if equal(P, Q):
-          print x, y, 'not new'
           cls[1].add((x,y))
           new_cls = False
           break
         
       # If not, create a new class.
       if new_cls:
-        print x, y, 'new'
         class_lst.append([P, set([(x,y)])])
       
       if len(class_lst) == 0:
@@ -173,10 +171,33 @@ def classes(Ps, X, Y):
         
   return class_lst
 
-
-
-
-
+# Takes a length, initial direction vector, and rotational matrix and 
+# computes the cycles for all points in the square from (0,0) to (l-1,l-1), 
+# inclusively.
+#
+# l = length of side of square
+# d = [x_dir y_dir]
+# rot = rotational matrix
+#
+# Returns P, a list of paths, and arrays X and Y such that P[i] is the path
+# with initial point (X[i], Y[i]).
+def grid(l, d, rot):
+  res = []
+  X = []
+  Y = []
+  for x in range(0, l):
+    X.append([])
+    Y.append([])
+    res.append([])
+    for y in range(0, l):
+      P, count, found = find_cycle((x,y), d, rot)
+      X[-1].append(x)
+      Y[-1].append(y)
+      if found:
+        res[-1].append(P)
+      else:
+        res[-1].append(None)
+  return res, X, Y
 
 
 
