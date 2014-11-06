@@ -66,29 +66,25 @@ def plot_class_len_vs_grid_len(l, d, rot):
   Xs = []
   Ys = []
   for i in range(2, l):
-    Ps, X, Y = grid(i, d, rot)
-    cls = classes(Ps, X, Y)
+    Ps = grid(i, d, rot)
+    cls = classes(Ps)
     Xs.append(i)
     Ys.append(len(cls))
   plt.plot(Xs, Ys)
   plt.show()
   
 def plot_init_vs_cycle_len(l, d, rot):
-  Ps, X, Y = grid(l, d, rot)
+  Ps = grid(l, d, rot)
   
   Xs = []
   Ys = []
   i = 0
-  while i < len(Ps):
-    j = 0
-    while j < len(Ps[i]):
-      x = X[i][j]
-      y = Y[i][j]
-      Xs.append((x**2 + y**2)**.5)
-      Ys.append(len(Ps[i][j]))
+  for P in Ps:
+    x = P.x
+    y = P.y
+    Xs.append((x**2 + y**2)**.5)
+    Ys.append(len(Ps))
       
-      j += 1
-    i += 1
   plt.scatter(Xs, Ys)
   plt.title('Intial point vs. Cycle length (l=' + str(l) +')')
   plt.xlabel('Distance from initial point to (0,0)')

@@ -1,6 +1,18 @@
 import numpy as np
 import sys
 
+class Path:
+  def __init__(self, lst, x, y):
+    self.points = list(lst)
+    self.x = x
+    self.y = y
+  
+  def __len__(self):
+    return len(self.points)
+  
+  def __list__(self):
+    return self.points
+
 def simple_prime(n, prime_lst):
   for i in prime_lst:
     if i >= n:
@@ -74,7 +86,7 @@ def find_cycle(p, d, rot, **kwargs):
     count += 1
   
   P.append(P[0].copy())
-  return P, count, True
+  return Path(P, initial[0][1], initial[0][1]), count, True
 
 # Takes two points and returns the list of solns to the rot/trans transform
 # equations.
@@ -143,31 +155,27 @@ def equal(P, Q):
 # such that class = [representative path, [init set]]
 # such that init set = set([(x,y), ...])
 def classes(Ps, X, Y):
-  Ps = tuple(tuple(p for p in P) for P in Ps)
-  class_lst = []
-  for i in range(len(Ps)):
-    for j in range(len(Ps[i])):
-      P = Ps[i][j]
-      x = X[i][j]
-      y = Y[i][j]
+  for P in Ps:
+    x = P.x()
+    y = P.y()
+    
+    # Search reps of existing classes to see if one is equiv to P
+    new_cls = True
+    for cls in class_lst:
+      Q = cls[0]
       
-      # Search reps of existing classes to see if one is equiv to P
-      new_cls = True
-      for cls in class_lst:
-        Q = cls[0]
-        
-        # If equal, append (x,y) to classes init point list.
-        if equal(P, Q):
-          cls[1].add((x,y))
-          new_cls = False
-          break
-        
-      # If not, create a new class.
-      if new_cls:
-        class_lst.append([P, set([(x,y)])])
+      # If equal, append (x,y) to classes init point list.
+      if equal(P, Q):
+        cls[1].add((x,y))
+        new_cls = False
+        break
       
-      if len(class_lst) == 0:
-        class_lst.append([P, set([(x,y)])])
+    # If not, create a new class.
+    if new_cls:
+      class_lst.append([P, set([(x,y)])])
+    
+    if len(class_lst) == 0:
+      class_lst.append([P, set([(x,y)])])
         
   return class_lst
 
@@ -183,21 +191,14 @@ def classes(Ps, X, Y):
 # with initial point (X[i], Y[i]).
 def grid(l, d, rot):
   res = []
-  X = []
-  Y = []
   for x in range(0, l):
-    X.append([])
-    Y.append([])
-    res.append([])
     for y in range(0, l):
       P, count, found = find_cycle((x,y), d, rot)
-      X[-1].append(x)
-      Y[-1].append(y)
       if found:
-        res[-1].append(P)
+        res.append(P)
       else:
-        res[-1].append(None)
-  return res, X, Y
+        res.append(None)
+  return res
 
 
 
