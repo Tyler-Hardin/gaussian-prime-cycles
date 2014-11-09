@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{graphicx}
 \usepackage{setspace}
 \doublespacing
 \title{Numerical Research on Gaussian Prime Cycles}
@@ -29,4 +30,9 @@ More verbosely, they are equal if there exists a bijective translation-rotation 
 
 We plotted the number of classes in an initial point in a $l \times l$ grid as a function of $l$, with the grid being from $(0,0)$ to $(l-1,l-1)$ inclusively. Stated more simply: the number of unique shapes starting in the square and the size of the square. This allows us to see what the likely trend is as to the rate of discovering new shapes as one searches farther from $(0,0)$.
 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=.5]{clgl30.png}
+\caption{Number of classes as a function of grid size. Interestingly, the relation appears to be approximately linear.}
+\end{figure}
 \end{document}

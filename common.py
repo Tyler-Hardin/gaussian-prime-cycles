@@ -1,8 +1,9 @@
 import atexit
 import pickle
 import numpy as np
-import signal
 import sys
+
+print_progress = False
 
 class Path:
   def __init__(self, lst, x, y):
@@ -27,6 +28,9 @@ class Class:
     self.path = path
     self.init_points = set()
     self.init_points.add(init_point)
+  
+  def __len__(self):
+    return len(self.init_points)
   
   def in_grid(self, l):
     for i in self.init_points:
@@ -182,6 +186,9 @@ def classes(Ps):
     x = P.x
     y = P.y
     
+    if print_progress:
+      print 'Checking path at (' + str(x) + ', ' + str(y) + ')'
+    
     # Search reps of existing classes to see if one is equiv to P
     new_cls = True
     for cls in class_lst:
@@ -233,7 +240,6 @@ atexit.register(save_primes)
 try:
   f = open('primelist', 'r')
   prime.lst = pickle.load(f)
-  print prime.lst
   f.close()
 except IOError as e:
   prime.lst = [2, 3, 5]

@@ -1,8 +1,18 @@
 import matplotlib.pyplot as plt
+import matplotlib.cm
 import numpy as np
 
 from common import *
 
+# Abstracts calls to plt.{savefig,show,close)() to allow for common interface
+# for supressing show and or saving in all plot commands in this module.
+def plot(kwargs):
+  if 'filename' in kwargs:
+  	plt.savefig(kwargs['filename'], dpi=1000)
+  if kwargs.get('show', True):
+  	plt.show()
+  plt.close()
+  
 # Plots a single path from find_cycle(...).
 def plot_cycle(P, **kwargs):
   X = []
@@ -26,42 +36,42 @@ def plot_cycle(P, **kwargs):
     width=plt.gcf().get_figwidth()*.0005, \
     headwidth=2, headlength=3)
   
-  if 'filename' in kwargs:
-  	plt.savefig(kwargs['filename'], dpi=1500)
-  if kwargs.get('show', True):
-  	plt.show()
-  plt.close()
+  plot(kwargs.get('plot_args', {}))
 
 # Plots initial points and colors them by their class (all in the same class 
 # have the same color), with points with longer paths being colored lighter.
 def plot_classes(l, d, rot):
-  Ps, X, Y = grid(l, d, rot)
+  Ps = grid(l, d, rot)
 
-  cls = classes(Ps, X, Y)
-  cls = sorted(cls, key=lambda c : len(c[0]))
+  cls = classes(Ps)
+  cls = sorted(cls, key=lambda c : len(c.path))
 
   print len(cls), 'classes'
   for i in cls:
-    plot_cycle(i[0], filename=str(tuple(d))+ '_' + \
-    str(tuple(next(iter(i[1])))) + '.svg', show=False)
+    plot_cycle(i.path, plot_args={'filename':'classes/' + str(tuple(d))+ '_' + \
+    str(tuple(next(iter(i.init_points)))), 'show':False})
 
-  i = 0
+  cm = plt.cm.get_cmap('nipy_spectral')
+  i = 0.0
+  X = []
+  Y = []
+  color_lst = []
   for c in cls:
-    X = []
-    Y = []
-    for pt in c[1]:
+    for pt in c.init_points:
       X.append(pt[0])
       Y.append(pt[1])
-    plt.scatter(X, Y, c=str(float(i) / len(cls)), s=50)
-    
+      color_lst.append(i)
     i += 1
+    #plt.scatter(X, Y, c=str(float(i) / len(cls)), s=50)
+  plt.scatter(X, Y, c=color_lst, s=50, cmap=cm)
+    
   plt.xlim(-1, l)
   plt.ylim(-1, l)
   plt.show()
 
 # Plots a line with x being the side length of the square grid being considered
 # and y being the number of classes in the grid.
-def plot_class_len_vs_grid_len(l, d, rot):
+def plot_class_len_vs_grid_len(l, d, rot, **kwargs):
   assert l >= 2
   Xs = []
   Ys = []
@@ -76,10 +86,13 @@ def plot_class_len_vs_grid_len(l, d, rot):
       if c.in_grid(i):
         count += 1
     Ys.append(count)
-  #plt.plot(Xs, Ys)
-  #plt.show()
+  plt.plot(Xs, Ys)
+  #plt.title('Grid size vs. Number of classes')
+  plt.xlabel('Grid size')
+  plt.ylabel('Number of classes')
+  plot(kwargs.get('plot_args', {}))
   
-def plot_init_vs_cycle_len(l, d, rot):
+def plot_init_vs_cycle_len(l, d, rot, **kwargs):
   Ps = grid(l, d, rot)
   
   Xs = []
@@ -91,7 +104,8 @@ def plot_init_vs_cycle_len(l, d, rot):
     Ys.append(len(P))
       
   plt.scatter(Xs, Ys)
-  plt.title('Intial point vs. Cycle length (l=' + str(l) +')')
+  #plt.title('Intial point vs. Cycle length (l=' + str(l) +')')
   plt.xlabel('Distance from initial point to (0,0)')
   plt.ylabel('Length of cycle')
-  plt.show()
+  
+  plot(kwargs.get('plot_args', {}))
