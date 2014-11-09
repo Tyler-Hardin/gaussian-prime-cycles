@@ -78,12 +78,11 @@ def plot_init_vs_cycle_len(l, d, rot):
   
   Xs = []
   Ys = []
-  i = 0
   for P in Ps:
     x = P.x
     y = P.y
     Xs.append((x**2 + y**2)**.5)
-    Ys.append(len(Ps))
+    Ys.append(len(P))
       
   plt.scatter(Xs, Ys)
   plt.title('Intial point vs. Cycle length (l=' + str(l) +')')

@@ -7,6 +7,12 @@ class Path:
     self.x = x
     self.y = y
   
+  def __getitem__(self, i):
+    return self.points.__getitem__(i)
+  
+  def __getslice__(self, i, j):
+    return self.points.__getslice__(i, j)
+        
   def __len__(self):
     return len(self.points)
   
@@ -21,6 +27,21 @@ def simple_prime(n, prime_lst):
       return False
   return True
 
+class Class:
+  def __init__(self, path, init_point):
+    self.path = path
+    self.init_points = set()
+    self.init_points.add(init_point)
+  
+  def in_grid(self, l):
+    for i in self.init_points:
+      if 0 <= i[0] < l and 0 <= i[1] < l:
+        return True
+    return False
+  
+  def add_point(self, point):
+    self.init_points.add(point)
+  
 def prime(n):
   if n <= 1:
     return False
@@ -145,37 +166,35 @@ def equal(P, Q):
 # Takes a list of cycles, x initials, and y initials and returns the
 # equivalence classes based on translational/rotational equivalence.
 # 
-# Ps = [[Path, Path, ...], [Path, Path, ...], ...]
-# X = [[x init, x init, ...], [x init, x init, ...], ...]
-# Y = [[y init, y init, ...], [y init, y init, ...], ...]
-# such that P[i][j] is the path with initial point (X[i][j], Y[i][j]).
+# Ps = [Path, ...]
 #
 # Returns a list of eq. classes of the form:
-# [class, ...]
+# [Class, ...]
 # such that class = [representative path, [init set]]
 # such that init set = set([(x,y), ...])
-def classes(Ps, X, Y):
+def classes(Ps):
+  class_lst = []
   for P in Ps:
-    x = P.x()
-    y = P.y()
+    x = P.x
+    y = P.y
     
     # Search reps of existing classes to see if one is equiv to P
     new_cls = True
     for cls in class_lst:
-      Q = cls[0]
+      Q = cls.path
       
       # If equal, append (x,y) to classes init point list.
       if equal(P, Q):
-        cls[1].add((x,y))
+        cls.add_point((x,y))
         new_cls = False
         break
       
     # If not, create a new class.
     if new_cls:
-      class_lst.append([P, set([(x,y)])])
+      class_lst.append(Class(P, (x,y)))
     
     if len(class_lst) == 0:
-      class_lst.append([P, set([(x,y)])])
+      class_lst.append(Class(P, (x,y)))
         
   return class_lst
 
