@@ -1,6 +1,35 @@
 import numpy as np
 import sys
 
+import matplotlib.pyplot as plt
+def plot_cycle(P, **kwargs):
+  X = []
+  Y = []
+  
+  for p in P:
+    X.append(p[0])
+    Y.append(p[1])
+  
+  X = np.array(X)
+  Y = np.array(Y)
+  
+  lim_offset = 1
+  plt.xlim((min(X) - lim_offset, max(X) + lim_offset))
+  plt.ylim((min(Y) - lim_offset, max(Y) + lim_offset))
+  
+  w = max(X) - min(X)
+  h = max(Y) - min(Y)
+  plt.quiver(X[:-1], Y[:-1], X[1:]-X[:-1], Y[1:]-Y[:-1], \
+    scale_units='xy', angles='xy', scale=1, \
+    width=plt.gcf().get_figwidth()*.0005, \
+    headwidth=2, headlength=3)
+  
+  if 'filename' in kwargs:
+  	plt.savefig(kwargs['filename'], dpi=1500)
+  if kwargs.get('show', True):
+  	plt.show()
+  plt.close()
+
 class Path:
   def __init__(self, lst, x, y):
     self.points = list(lst)
@@ -174,6 +203,7 @@ def equal(P, Q):
 # such that init set = set([(x,y), ...])
 def classes(Ps):
   class_lst = []
+  count = 0
   for P in Ps:
     x = P.x
     y = P.y
@@ -192,10 +222,15 @@ def classes(Ps):
     # If not, create a new class.
     if new_cls:
       class_lst.append(Class(P, (x,y)))
+      #plot_cycle(P, filename='class-' + str(count), show=False)
+      count += 1
     
     if len(class_lst) == 0:
       class_lst.append(Class(P, (x,y)))
-        
+      #plot_cycle(P, filename='class-' + str(count), show=False)
+      count += 1
+  
+  print count
   return class_lst
 
 # Takes a length, initial direction vector, and rotational matrix and 

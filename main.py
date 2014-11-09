@@ -11,7 +11,7 @@ from debug import *
   
 d = [1, 0]
 rot = [[0,-1],[1,0]]
-l = 5
+l = 10
 
 plot_class_len_vs_grid_len(l, d, rot)
 #plot_init_vs_cycle_len(10, d, rot)
