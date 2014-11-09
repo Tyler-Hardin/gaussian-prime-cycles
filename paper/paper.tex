@@ -3,6 +3,7 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{setspace}
+\usepackage{subfigure}
 \doublespacing
 \title{Numerical Research on Gaussian Prime Cycles}
 \author{Karen Dana \and Tyler Hardin}
@@ -35,4 +36,17 @@ We plotted the number of classes in an initial point in a $l \times l$ grid as a
 \includegraphics[scale=.5]{clgl30.png}
 \caption{Number of classes as a function of grid size. Interestingly, the relation appears to be approximately linear.}
 \end{figure}
+
+We also plotted the length of a cycle as a (multi-valued) function of the distance from $(0,0)$. A trend in this would indicate that the farther one is from $0$, the longer the cycle one is likely to find. This was accomplished by plotting all cycles in a given grid for multiple grid sizes. Interestingly, the grouping and relative shape of the scatter plot is similar for many sizes of grid, even though the absolute difference is large.
+
+\begin{figure}[h!]
+\centering
+
+\subfigure[All paths in grid of size $20$.]{\includegraphics[scale=0.25]{icl20.png}}\\
+\subfigure[All paths in grid of size $40$.]{\includegraphics[scale=0.25]{icl40.png}}
+
+\caption{Number of classes as a function of grid size. Notice how, in both, there are essentially three clusters.}
+\end{figure}
+
+
 \end{document}

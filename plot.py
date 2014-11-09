@@ -8,7 +8,7 @@ from common import *
 # for supressing show and or saving in all plot commands in this module.
 def plot(kwargs):
   if 'filename' in kwargs:
-  	plt.savefig(kwargs['filename'], dpi=1000)
+  	plt.savefig(kwargs['filename'], dpi=600)
   if kwargs.get('show', True):
   	plt.show()
   plt.close()
