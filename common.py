@@ -1,34 +1,8 @@
+import atexit
+import pickle
 import numpy as np
+import signal
 import sys
-
-import matplotlib.pyplot as plt
-def plot_cycle(P, **kwargs):
-  X = []
-  Y = []
-  
-  for p in P:
-    X.append(p[0])
-    Y.append(p[1])
-  
-  X = np.array(X)
-  Y = np.array(Y)
-  
-  lim_offset = 1
-  plt.xlim((min(X) - lim_offset, max(X) + lim_offset))
-  plt.ylim((min(Y) - lim_offset, max(Y) + lim_offset))
-  
-  w = max(X) - min(X)
-  h = max(Y) - min(Y)
-  plt.quiver(X[:-1], Y[:-1], X[1:]-X[:-1], Y[1:]-Y[:-1], \
-    scale_units='xy', angles='xy', scale=1, \
-    width=plt.gcf().get_figwidth()*.0005, \
-    headwidth=2, headlength=3)
-  
-  if 'filename' in kwargs:
-  	plt.savefig(kwargs['filename'], dpi=1500)
-  if kwargs.get('show', True):
-  	plt.show()
-  plt.close()
 
 class Path:
   def __init__(self, lst, x, y):
@@ -48,14 +22,6 @@ class Path:
   def __list__(self):
     return self.points
 
-def simple_prime(n, prime_lst):
-  for i in prime_lst:
-    if i >= n:
-      break
-    if n % i == 0:
-      return False
-  return True
-
 class Class:
   def __init__(self, path, init_point):
     self.path = path
@@ -70,6 +36,14 @@ class Class:
   
   def add_point(self, point):
     self.init_points.add(point)
+
+def simple_prime(n, prime_lst):
+  for i in prime_lst:
+    if i >= n:
+      break
+    if n % i == 0:
+      return False
+  return True
   
 def prime(n):
   if n <= 1:
@@ -84,13 +58,13 @@ def prime(n):
     if t + i * 6 + 1 > prime.lst[-1] and \
     simple_prime(t + i * 6 + 1, prime.lst):
       prime.lst.append(t + i * 6 + 1)
-    if simple_prime(t + i * 6 + 5, prime.lst):
+    if t + i * 6 + 5 > prime.lst[-1] and \
+    simple_prime(t + i * 6 + 5, prime.lst):
       prime.lst.append(t + i * 6 + 5)
     i += 1
     
   prime.map[n] = simple_prime(n, prime.lst)
   return prime.map[n]
-prime.lst = [2, 3, 5, 7]
 prime.map = {}
 
 # Citation: http://math.stackexchange.com/a/151781/80413
@@ -132,11 +106,11 @@ def find_cycle(p, d, rot, **kwargs):
       print '(' + str(initial[0][0]) + ',' + str(initial[0][1]) + '), (' + \
         str(p[0][0]) + ',' + str(p[0][1]) + ')'
       print 'Cycle not found... len(P)=' + str(len(P))
-      return P, count, False
+      return None
     count += 1
   
   P.append(P[0].copy())
-  return Path(P, initial[0][1], initial[0][1]), count, True
+  return Path(P, initial[0][0], initial[0][1])
 
 # Takes two points and returns the list of solns to the rot/trans transform
 # equations.
@@ -222,15 +196,8 @@ def classes(Ps):
     # If not, create a new class.
     if new_cls:
       class_lst.append(Class(P, (x,y)))
-      #plot_cycle(P, filename='class-' + str(count), show=False)
-      count += 1
-    
-    if len(class_lst) == 0:
-      class_lst.append(Class(P, (x,y)))
-      #plot_cycle(P, filename='class-' + str(count), show=False)
       count += 1
   
-  print count
   return class_lst
 
 # Takes a length, initial direction vector, and rotational matrix and 
@@ -241,26 +208,35 @@ def classes(Ps):
 # d = [x_dir y_dir]
 # rot = rotational matrix
 #
-# Returns P, a list of paths, and arrays X and Y such that P[i] is the path
-# with initial point (X[i], Y[i]).
+# Returns P, a list of paths.
 def grid(l, d, rot):
   res = []
   for x in range(0, l):
     for y in range(0, l):
-      P, count, found = find_cycle((x,y), d, rot)
-      if found:
-        res.append(P)
-      else:
-        res.append(None)
+      P = find_cycle((x,y), d, rot)
+      res.append(P)
   return res
 
 
 
+def save_primes():
+  try:
+    f = open('primelist', 'w')
+    pickle.dump(prime.lst, f)
+    f.close()
+  except IOError as e:
+    print 'Couldn\'t save prime list.'
 
 
+atexit.register(save_primes)
 
-
-
+try:
+  f = open('primelist', 'r')
+  prime.lst = pickle.load(f)
+  print prime.lst
+  f.close()
+except IOError as e:
+  prime.lst = [2, 3, 5]
 
 
 

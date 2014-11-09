@@ -65,13 +65,19 @@ def plot_class_len_vs_grid_len(l, d, rot):
   assert l >= 2
   Xs = []
   Ys = []
+  
+  Ps = grid(l, d, rot)
+  cls = classes(Ps)
   for i in range(2, l):
-    Ps = grid(i, d, rot)
-    cls = classes(Ps)
     Xs.append(i)
-    Ys.append(len(cls))
-  plt.plot(Xs, Ys)
-  plt.show()
+    count = 0
+    # Count classes in (0,0),(i,i) grid
+    for c in cls:
+      if c.in_grid(i):
+        count += 1
+    Ys.append(count)
+  #plt.plot(Xs, Ys)
+  #plt.show()
   
 def plot_init_vs_cycle_len(l, d, rot):
   Ps = grid(l, d, rot)
