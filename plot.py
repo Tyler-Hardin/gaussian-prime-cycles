@@ -40,7 +40,7 @@ def plot_cycle(P, **kwargs):
 
 # Plots initial points and colors them by their class (all in the same class 
 # have the same color), with points with longer paths being colored lighter.
-def plot_classes(l, d, rot):
+def plot_classes(l, d, rot, **kwargs):
   Ps = grid(l, d, rot)
 
   cls = classes(Ps)
@@ -67,7 +67,7 @@ def plot_classes(l, d, rot):
     
   plt.xlim(-1, l)
   plt.ylim(-1, l)
-  plt.show()
+  plot(kwargs.get('plot_args', {}))
 
 # Plots a line with x being the side length of the square grid being considered
 # and y being the number of classes in the grid.

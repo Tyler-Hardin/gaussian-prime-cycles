@@ -10,7 +10,7 @@
 \begin{document}
 	\maketitle
 	
-A Gaussian integer is a complex number restricted to integer real and complex components. For example, 5+6i is a Gaussian integer, while 5.5+pi*I is not. A Gaussian prime, for the purposes of this paper, is a Gaussian integer such that one of the following is true
+A Gaussian integer is a complex number restricted to integer real and complex components. For example, $5+6i$ is a Gaussian integer, while $5.5+\pi i$ is not. A Gaussian prime, for the purposes of this paper, is a Gaussian integer $z$ such that one of the following is true:
 % https://tex.stackexchange.com/questions/114471/how-to-simply-center-equations-using-eqnarray
 \begin{gather*}
   \mbox{im}(z) \mbox{ is prime and } \mbox{real}(z) = 0 \\
@@ -18,7 +18,7 @@ A Gaussian integer is a complex number restricted to integer real and complex co
   \sqrt{\mbox{real}(z)^2 + \mbox{im}(z)^2} \mbox{ is prime and } \mbox{real}(z) \neq 0 \mbox{ and } \mbox{im}(z) \neq 0
 \end{gather*}
   
-A Gaussian prime cycle, is a path formed by starting at an initial point, we will call $x_0$, with an initial direction (eg $(1,0)$), we will call d, and stepping right (that is $x_{n+1}=x_n + d$) until $x_n$ is a Gaussian prime. If $x_n$ is a Gaussian prime, we rotate $d$ $90^{\circ}$, and continue in that direction until another Gaussian prime is encountered; then we rotate again. This process continues until we return to our initial point and have our initial direction.
+A Gaussian prime cycle, is a path formed by starting at an initial point (e.g. $(5,7)$), we will call $x_0$, with an initial direction (eg $(1,0)$), we will call d, and stepping right (that is $x_{n+1}=x_n + d$) until $x_n$ is a Gaussian prime. If $x_n$ is a Gaussian prime, we rotate $d$ $90^{\circ}$, and continue in that direction until another Gaussian prime is encountered; then we rotate again. This process continues until we return to our initial point and have our initial direction.
 
 For our purposes, an equivalence relation is a relation that partitions a set. 
 Equivalence classes are sets of elements that are all equal under a given equivalence relation. It is a known property of equivalence relations that every element belongs to exactly one class.
@@ -37,16 +37,26 @@ We plotted the number of classes in an initial point in a $l \times l$ grid as a
 \caption{Number of classes as a function of grid size. Interestingly, the relation appears to be approximately linear.}
 \end{figure}
 
-We also plotted the length of a cycle as a (multi-valued) function of the distance from $(0,0)$. A trend in this would indicate that the farther one is from $0$, the longer the cycle one is likely to find. This was accomplished by plotting all cycles in a given grid for multiple grid sizes. Interestingly, the grouping and relative shape of the scatter plot is similar for many sizes of grid, even though the absolute difference is large.
+We also plotted the length of a cycle as a (multi-valued) function of the distance from $(0,0)$. A trend in this would indicate that the farther one is from $0$, the longer the cycle one is likely to find. This was accomplished by plotting all cycles in a given grid for multiple grid sizes. Interestingly, the grouping and relative shape of the scatter plot is similar for many sizes of grid, even though the absolute difference is large. This may imply a golden-ratio-like relation between the sizes of paths when the sizes are sorted into a monotonically increasing sequence. This may be so, because the Fibonacci sequence, whose consecutive ratios approximate the golden ratio, exhibits a similar scale-invariance.
 
 \begin{figure}[h!]
 \centering
-
-\subfigure[All paths in grid of size $20$.]{\includegraphics[scale=0.25]{icl20.png}}\\
-\subfigure[All paths in grid of size $40$.]{\includegraphics[scale=0.25]{icl40.png}}
+\subfigure[All paths in grid of size 10.]{\includegraphics[scale=0.25]{icl10.png}}
+\subfigure[All paths in grid of size 20.]{\includegraphics[scale=0.25]{icl20.png}}\\
+\subfigure[All paths in grid of size 30.]{\includegraphics[scale=0.25]{icl30.png}}
+\subfigure[All paths in grid of size 70.]{\includegraphics[scale=0.25]{icl70.png}}
 
 \caption{Number of classes as a function of grid size. Notice how, in both, there are essentially three clusters.}
 \end{figure}
 
+Finally, we graphed a 2D scatter plot colored with each point $(x_i, y_j)$ colored by the class to which the cycle with initial point $(x_i, y_j)$ belongs. There are no obvious patterns to the graph.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=.5]{class_scatter.png}
+\caption{Points colored by the class to which they (i.e. their path) belong.}
+\end{figure}
+
+Based on the results of our research we suggest two possible results to explore using more theoretical methods
 
 \end{document}
