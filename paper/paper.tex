@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage[margin=.75in]{geometry}
 \usepackage{graphicx}
 \usepackage{setspace}
 \usepackage{subfigure}
@@ -32,7 +33,7 @@ More verbosely, they are equal if there exists a bijective translation-rotation 
 We plotted the number of classes in an initial point in a $l \times l$ grid as a function of $l$, with the grid being from $(0,0)$ to $(l-1,l-1)$ inclusively. Stated more simply: the number of unique shapes starting in the square and the size of the square. This allows us to see what the likely trend is as to the rate of discovering new shapes as one searches farther from $(0,0)$.
 
 \begin{figure}[h!]
-\centering
+\center
 \includegraphics[scale=.5]{clgl30.png}
 \caption{Number of classes as a function of grid size. Interestingly, the relation appears to be approximately linear.}
 \end{figure}
@@ -40,7 +41,7 @@ We plotted the number of classes in an initial point in a $l \times l$ grid as a
 We also plotted the length of a cycle as a (multi-valued) function of the distance from $(0,0)$. A trend in this would indicate that the farther one is from $0$, the longer the cycle one is likely to find. This was accomplished by plotting all cycles in a given grid for multiple grid sizes. Interestingly, the grouping and relative shape of the scatter plot is similar for many sizes of grid, even though the absolute difference is large. This may imply a golden-ratio-like relation between the sizes of paths when the sizes are sorted into a monotonically increasing sequence. This may be so, because the Fibonacci sequence, whose consecutive ratios approximate the golden ratio, exhibits a similar scale-invariance.
 
 \begin{figure}[h!]
-\centering
+\center
 \subfigure[All paths in grid of size 10.]{\includegraphics[scale=0.25]{icl10.png}}
 \subfigure[All paths in grid of size 20.]{\includegraphics[scale=0.25]{icl20.png}}\\
 \subfigure[All paths in grid of size 30.]{\includegraphics[scale=0.25]{icl30.png}}
@@ -52,11 +53,9 @@ We also plotted the length of a cycle as a (multi-valued) function of the distan
 Finally, we graphed a 2D scatter plot colored with each point $(x_i, y_j)$ colored by the class to which the cycle with initial point $(x_i, y_j)$ belongs. There are no obvious patterns to the graph.
 
 \begin{figure}[h!]
-\centering
+\center
 \includegraphics[scale=.5]{class_scatter.png}
 \caption{Points colored by the class to which they (i.e. their path) belong.}
 \end{figure}
-
-Based on the results of our research we suggest two possible results to explore using more theoretical methods
 
 \end{document}
