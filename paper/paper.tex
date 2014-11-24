@@ -23,7 +23,7 @@ A Gaussian integer is a complex number restricted to integer-valued real and com
   \sqrt{\mbox{real}(z)^2 + \mbox{im}(z)^2} \mbox{ is prime and } \mbox{real}(z) \neq 0 \mbox{ and } \mbox{im}(z) \neq 0
 \end{gather*}
   
-A Gaussian prime cycle, is a path formed by starting at an initial point (e.g. $(5,7)$), we will call $x_0$, with an initial direction (eg $(1,0)$), we will call d, and stepping right (that is $x_{n+1}=x_n + d$) until $x_n$ is a Gaussian prime. If $x_n$ is a Gaussian prime, we rotate $d$ $90^{\circ}$ counterclockwise, and continue in that direction until another Gaussian prime is encountered; then we rotate again. This process continues until we return to our initial point \textit{and} have our initial direction. The cycles are not proven to exist for all initial points, and as a new problem, it may be a while until the result is known. \cite{mathoverflow,wolfram}
+A Gaussian prime cycle, is a path formed by starting at an initial point (e.g. $(5,7)$), we will call $x_0$, with an initial direction (e.g. $(1,0)$), we will call $d$, and stepping right (that is $x_{n+1}=x_n + d$) until $x_n$ is a Gaussian prime. If $x_n$ is a Gaussian prime, we rotate $d$ $90^{\circ}$ counterclockwise, and continue in that direction until another Gaussian prime is encountered; then we rotate again. This process continues until we return to our initial point \textit{and} have our initial direction. The cycles are not proven to exist for all initial points, and as a new problem, it may be a while until the result is known. \cite{mathoverflow,wolfram}
 
 For our purposes, an equivalence relation is a relation that partitions a set. 
 Equivalence classes are sets of elements that are all equal under a given equivalence relation. It is a known property of equivalence relations that every element belongs to exactly one class.
@@ -31,7 +31,7 @@ An example would be the natural numbers with the equivalence relation being equi
 If $n$, a natural number, is even, it belongs to the class of even numbers which are all equal mod 2.
 And vice versa if it is odd. Every natural number is either even or odd, so every natural number is in at least one class. No natural number is both even and odd, so no natural number can be in both classes. Thus every element of $\mathbb{N}$ is in exactly one class.
 We use this concept to define an equivalence relation on the Gaussian prime cycles.
-$G$, a Gaussian prime cycle, is considered equivalent to $H$, another Gaussian prime cycle, if $G$ can be rotated or translated such that the are the same shape.
+$G$, a Gaussian prime cycle, is considered equivalent to $H$, another Gaussian prime cycle, if $G$ can be rotated or translated such that they are the same shape.
 More verbosely, they are equal if there exists a bijective translation-rotation transformation $T_M:G \to H$.
 
 We plotted the number of classes with an initial point in a $l \times l$ grid as a function of $l$, with the grid being from $(0,0)$ to $(l-1,l-1)$ inclusively. Stated more simply: the number of unique shapes starting in the square on the $y$ axis and the size of the square on the $x$ axis. This allows us to see what the likely trend is as to the rate of discovering new shapes as one searches farther from $(0,0)$. The cycle may leave the square, only the initial point is considered.
